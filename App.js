@@ -9,6 +9,7 @@ import {
   StatusBar,
   Button,
   SafeAreaView,
+  Platform,
 } from "react-native";
 
 /* Manipulador de eventos de notificação */
@@ -57,6 +58,8 @@ export default function App() {
         usuario: "Rodrigo 😅",
         cidade: "São Paulo",
       },
+
+      sound: Platform.OS === "ios" ? "defauld" : "",
     };
 
     /* Função de agendamento de notificações */
