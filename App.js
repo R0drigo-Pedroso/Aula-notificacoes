@@ -1,6 +1,6 @@
 import * as Notifications from "expo-notifications";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   StyleSheet,
@@ -25,6 +25,8 @@ Notifications.setNotificationHandler({
 
 /* Abaixo esta o components */
 export default function App() {
+  const [dados, setDados] = useState(null);
+
   useEffect(() => {
     async function permissoesIos() {
       return await Notifications.requestPermissionsAsync({
@@ -47,6 +49,7 @@ export default function App() {
     /* Ouvinte de evento para as notificações recebidas, ou seja, quando a notificação aparece no topo da tela do dispositivo */
     Notifications.addNotificationResponseReceivedListener((resposta) => {
       console.log(resposta.notification.request.content.data);
+      setDados(resposta.notification.request.content.data);
     });
   }, []);
 
@@ -75,6 +78,12 @@ export default function App() {
       <SafeAreaView style={styles.container}>
         <Text>Exemplo de sistema de notificação local</Text>
         <Button title="Disparar notificação" onPress={enviarMsg} />
+        {dados && (
+          <View>
+            <Text>{dados.usuario}</Text>
+            <Text>{dados.cidade}</Text>
+          </View>
+        )}
         <StatusBar style="auto" />
       </SafeAreaView>
     </>
